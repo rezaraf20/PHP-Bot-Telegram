@@ -1,9 +1,7 @@
 <?php
 namespace Longman\TelegramBot\Handlers;
-
 use Longman\TelegramBot\Entities\Keyboard;
 use Longman\TelegramBot\Request;
-
 class BackButtonHandler
 {
     public static function handleBackButton($chat_id)
@@ -21,8 +19,6 @@ class BackButtonHandler
             'text'    => 'لطفاً یکی از گزینه‌ها را انتخاب کنید:',  
             'reply_markup' => $keyboard_main,
         ];
-
-         
         Request::sendMessage($data);
     }
 }
