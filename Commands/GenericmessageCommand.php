@@ -23,38 +23,38 @@ class GenericmessageCommand extends SystemCommand
         $chat_id = $message->getChat()->getId();
         $text = trim($message->getText(true));
 
-        // بارگذاری رشته‌های متنی
+         
         $lang = require __DIR__ . '/../lang.php';
 
         switch ($text) {
             case $lang['live_prices']:
-                // دریافت قیمت‌های لحظه‌ای
+                 
                 $live_prices = \get_live_prices();
                 $response_text = $live_prices;
                 break;
 
             case $lang['wage_calculation']:
-                // اجرای دستور محاسبه اجرت
+                 
                 return $this->getTelegram()->executeCommand('wagecalculation');
 
             case $lang['coin_analysis']:
-                // اجرای دستور تحلیل سکه
+                 
                 return $this->getTelegram()->executeCommand('coinanalysis');
 
             case $lang['registration']:
-                // اجرای دستور ثبت نام
+                 
                 return $this->getTelegram()->executeCommand('registration');
 
 			case $lang['profile']:
-                // اجرای دستور پروفایل
+                 
                 return $this->getTelegram()->executeCommand('registration');
 
 			case $lang['customlink']:
-                // اجرای دستور لینک
+                 
                 return $this->getTelegram()->executeCommand('customlink');
 
             case $lang['back']:
-                // اجرای دستور بازگشت یا هر عمل دیگری
+                 
                 $response_text = $lang['welcome_message'];
                 break;
 
