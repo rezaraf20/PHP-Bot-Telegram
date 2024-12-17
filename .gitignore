@@ -1,2 +1,5 @@
 set.php
 vendor/
+token.json
+log.txt
+cache.json
