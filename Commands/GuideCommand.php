@@ -17,19 +17,14 @@ class CustomLinkCommand extends UserCommand
     {
         $chat_id = $this->getMessage()->getChat()->getId();
 		$lang = require __DIR__ . '/../lang.php';
-        // متن پیام
         $text = $lang['guid_text'].$lang['bot_username'];
-
-        // لینک ویدئو
-        $video_path = $lang['video_path']; // لینک ویدئوی مورد نظر
+        $video_path = $lang['video_path'];  
         $video_caption = $lang['video_caption'];
-
-        // ایجاد دکمه لینک
         $inline_keyboard = new InlineKeyboard([
             ['text' => $lang['jame_rahnama'], 'url' => $lang['site_url']],
         ]);
 
-       if (1) {
+       if ($video_path) {
             Request::sendVideo([
                 'chat_id' => $chat_id,
                 'video'   => $video_path,
@@ -38,11 +33,9 @@ class CustomLinkCommand extends UserCommand
         } else {
             Request::sendMessage([
                 'chat_id' => $chat_id,
-                'text'    => $lang['video_not_found'], // متن مناسب در صورت نبود ویدئو
+                'text'    => $lang['video_not_found'],  
             ]);
         }
-
-        // ارسال متن و دکمه
         return Request::sendMessage([
             'chat_id'      => $chat_id,
             'text'         => $text,
