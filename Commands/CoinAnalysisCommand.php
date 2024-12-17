@@ -1,47 +1,30 @@
 <?php
 namespace Longman\TelegramBot\Commands\UserCommands;
-
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Request;
-
 require_once __DIR__ . '/../wp-functions.php';
-
 class CoinAnalysisCommand extends UserCommand
 {
-    protected $name = 'coinanalysis'; // نام دستور با حروف کوچک و بدون زیرخط
+    protected $name = 'coinanalysis';  
     protected $description = 'تحلیل سکه';
     protected $usage = '/coinanalysis';
-
     public function execute(): ServerResponse
     {
         $message = $this->getMessage();
-        $chat_id = $message->getChat()->getId();
-
-        // بارگذاری رشته‌های متنی
+        $chat_id = $message->getChat()->getId(); 
         $lang = require __DIR__ . '/../lang.php';
-
-        // بررسی ثبت شماره موبایل
         $user_mobile = \get_user_mobile($chat_id);
-
         if (empty($user_mobile)) {
             $text = $lang['must_register_mobile'];
-
-            // تنظیم دستور بعدی پس از ثبت‌نام
             $this->getTelegram()->setCommandConfig('registermobile', ['next_command' => 'coinanalysis']);
-
-            // ارسال پیام به کاربر
             Request::sendMessage([
                 'chat_id' => $chat_id,
                 'text'    => $text,
             ]);
-
-            // اجرای دستور ثبت شماره موبایل
             return $this->getTelegram()->executeCommand('registermobile');
         }
-
-        // دریافت داده‌های سکه
-        $coin_data = get_coin_data(); // این تابع را پیاده‌سازی کنید
+        $coin_data = get_coin_data();  
 		$okornot = $coin_data['price'] / $coin_data['yekprice'];
 		$okornottext;
 		if($okornot >= 11.5){
@@ -73,7 +56,6 @@ class CoinAnalysisCommand extends UserCommand
 		 $lang['bot_username'],
 		 );
 		$text .= sprintf($lang['extra-pm'],$coin_data['time']);
-
         return Request::sendMessage([
             'chat_id' => $chat_id,
             'text'    => $text,
